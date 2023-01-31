@@ -1,0 +1,15 @@
+dataversion: '2'
+services:
+  mysql5:
+    image: mysql:5.7.15
+    environment:
+      - "MYSQL_ROOT_PASSWORD=123456789"
+    volumes:
+      - ./data/mysql:/var/lib/mysql/
+      - ./config/:/etc/mysql/conf.d/
+  mysqlconfigure:
+    image: mysql:5.7.15
+    environment:
+      - "MYSQL_ROOT_PASSWORD=123456789"
+      - "MYSQL_REPLICATION_USER=barry"
+      - "MYSQL_REPLICATION_PASSWORD=123456789"
