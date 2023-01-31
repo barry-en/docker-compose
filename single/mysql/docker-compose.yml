@@ -1,15 +1,20 @@
-dataversion: '2'
+version: "3.7"
 services:
-  mysql5:
-    image: mysql:5.7.15
+  mysql:
+    container_name: mysql
+    hostname: mysql
+    image: mysql:8.0
+    restart: always
     environment:
-      - "MYSQL_ROOT_PASSWORD=123456789"
+      - MYSQL_ROOT_PASSWORD=123456789
+      - LANG=C.UTF-8
+    command:
+      --max_connections=1000
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --default-authentication-plugin=mysql_native_password
+    ports:
+      - 3306:3306
     volumes:
-      - ./data/mysql:/var/lib/mysql/
-      - ./config/:/etc/mysql/conf.d/
-  mysqlconfigure:
-    image: mysql:5.7.15
-    environment:
-      - "MYSQL_ROOT_PASSWORD=123456789"
-      - "MYSQL_REPLICATION_USER=barry"
-      - "MYSQL_REPLICATION_PASSWORD=123456789"
+      - ./data:/var/lib/mysql
+      - ./config/my.cnf:/etc/my.cnf
